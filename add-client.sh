@@ -4,7 +4,7 @@ wg_name  = "wg0"
 srv_host = "172.0.0.1"         # external IP of Wireguard
 srv_port = 5280                # external Port of Wireguard
 cl_dns   = "127.0.0.1"         # which DNS-Server shall be used?
-cl_ip    = "10.0.0.0"          # subnet of client ips
+cl_ip    = "10.0.0."           # subnet of client ips; please omit last number
 cl_allowed = "192.10.10.0/32"  # IP for SPLIT-Tunnel / RoadWarrior
 
 
@@ -22,7 +22,7 @@ else
 	cl_priv = $(cat clients/$1/$1.priv) 
 	cl_pub  = $(cat clients/$1/$1.pub)
 	cl_pre  = $(cat clients/$1/$1.pre)
-	cl_ip   = "10.0.0."$(expr $(cat clients/last-ip.txt | tr "." " " | awk '{print $4}') + 1)
+	cl_ip   = $cl_ip""$(expr $(cat clients/last-ip.txt | tr "." " " | awk '{print $4}') + 1)
 	cl_sts  = "0.0.0.0/0"
 	FQDN    = $(hostname -f)
         srv_pub = $(cat /etc/wireguard/server_public_key)
