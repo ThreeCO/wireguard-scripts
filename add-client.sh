@@ -8,7 +8,7 @@ cl_dns = "127.0.0.1" # which DNS-Server shall be used?
 if [ $# -eq 0 ]
 then
 	echo "must pass a client name as an arg: add-client.sh new-client"
-elsets/
+else
 	echo "Creating client config for: $1"
 	mkdir -p clients/$1
 	umask 077 && wg genkey > clients/$1/$1.priv
