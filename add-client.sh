@@ -2,7 +2,7 @@
 
 srv_host = "172.0.0.1" # external IP of Wireguard
 srv_port = "5280" # external Port of Wireguard
-cl_dns = "127.0.0.1" # which DNS-Server shall be used?
+cl_dns   = "127.0.0.1" # which DNS-Server shall be used?
 
 
 if [ $# -eq 0 ]
@@ -15,12 +15,12 @@ else
         cat clients/$1/$1.priv | wg pubkey > clients/$1/$1.pub
 	wg genpsk > clients/$1/$1.pre
 	
-	cl_priv=$(cat clients/$1/$1.priv) 
-	cl_pub=$(cat clients/$1/$1.pub)
-	cl_pre=$(cat clients/$1/$1.pre)
-	cl_ip="10.0.0."$(expr $(cat clients/last-ip.txt | tr "." " " | awk '{print $4}') + 1)
-	FQDN=$(hostname -f)
-        srv_pub=$(cat /etc/wireguard/server_public_key)
+	cl_priv = $(cat clients/$1/$1.priv) 
+	cl_pub  = $(cat clients/$1/$1.pub)
+	cl_pre  = $(cat clients/$1/$1.pre)
+	cl_ip   = "10.0.0."$(expr $(cat clients/last-ip.txt | tr "." " " | awk '{print $4}') + 1)
+	FQDN    = $(hostname -f)
+        srv_pub = $(cat /etc/wireguard/server_public_key)
 	
         cat clients/wg0-client.example.conf | sed -e 's/:CLIENT_IP:/'"$ip"'/' | sed -e 's|:CLIENT_KEY:|'"$key"'|' | sed -e 's|:SERVER_PUB_KEY:|'"$SERVER_PUB_KEY"'|' | sed -e 's|:SERVER_ADDRESS:|'"$FQDN"'|' > clients/$1/wg0.conf
 	echo $ip > clients/last-ip.txt
