@@ -46,8 +46,11 @@ else
 	echo $ip" "$1 | sudo tee -a /etc/hosts
 	
 	# restart wg0
-	sudo wg-quick down $wg_name
-	sudo wg-quick up $wg_name
+	# sudo wg-quick down $wg_name
+	# sudo wg-quick up $wg_name
+
+        # resyncing wireguard 
+        sudo wg syncconf $wg_name <(wg-quick strip $wg_name)
 	
 	sudo wg show $wg_name
 	
