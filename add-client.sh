@@ -2,7 +2,7 @@
 
 wg_name  = "wg0"
 srv_host = "172.0.0.1"         # external IP of Wireguard
-srv_port = "5280"              # external Port of Wireguard
+srv_port = 5280                # external Port of Wireguard
 cl_dns   = "127.0.0.1"         # which DNS-Server shall be used?
 cl_ip    = "10.0.0.0"          # subnet of client ips
 cl_allowed = "192.10.10.0/32"  # IP for SPLIT-Tunnel / RoadWarrior
