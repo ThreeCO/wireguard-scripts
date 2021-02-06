@@ -1,7 +1,7 @@
 WIREGUARD_INTERFACE="wg0"
 WIREGUARD_LAN="10.0.0.0/24"
+WIREGUARD_PORT=5280
 MASQUERADE_INTERFACE="eth0"
-PORT=5280
 
 # Add MASQUERADE-RULE
 sudo iptables -t nat -I POSTROUTING -o $MASQUERADE_INTERFACE -j MASQUERADE -s $WIREGUARD_LAN
@@ -31,5 +31,5 @@ sudo iptables -A $CHAIN_NAME -i $WIREGUARD_INTERFACE -j DROP
 sudo iptables -A $CHAIN_NAME -j RETURN
 
 # ADD WG-Port to INPUT chain
-sudo iptables -A UDP -p udp --dport $PORT -j ACCEPT
+sudo iptables -A UDP -p udp --dport $WIREGUARD_PORT -j ACCEPT
 
