@@ -37,7 +37,7 @@ else
 	
 	echo "Adding peer to wg-conf"
 	# append peer to wg0.conf
-	cat clients/wg0-server.example.conf | sed -e 's|:CLIENT_NAME:|'"$1"'|' | sed -e 's|:CLIENT_PUBLIC_KEY:|'"$cl_pub"'|' | sed -e 's|:CLIENT_IP:|'"$cl_ip"'|' >> wg0.conf
+	cat clients/wg0-peer.example.conf | sed -e 's|:CLIENT_NAME:|'"$1"'|' | sed -e 's|:CLIENT_PUBLIC_KEY:|'"$cl_pub"'|' | sed -e 's|:CLIENT_IP:|'"$cl_ip"'|' >> wg0.conf
 	
 	echo "Adding peer to hosts file"
 	echo $ip" "$1 | sudo tee -a /etc/host
