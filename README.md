@@ -54,6 +54,19 @@ NOTE: this assumes some decent commandline knowlege.
 
 1. if everything is working right: `systemctl enable wg-quick@wg0.service`
 
+1. now lets create our first user
+
+1. now modify variables in `adduser.sh` according to your setup
+   ```
+   wg_name  = "wg0"
+   srv_host = "172.0.0.1"         # external IP of Wireguard
+   srv_port = 5280                # external Port of Wireguard
+   cl_dns   = "127.0.0.1"         # which DNS-Server shall be used?
+   cl_ip    = "10.0.0."           # subnet of client ips; please omit last number
+   cl_allowed = "192.10.10.0/32"  # IP for SPLIT-Tunnel / RoadWarrior
+   ```
+1. add user by typing `bash adduser.sh <name>`
+
 1. (optional) commit your changes to your fork of this repo.
 
 
