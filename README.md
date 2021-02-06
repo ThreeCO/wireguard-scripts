@@ -2,11 +2,8 @@
 
 add and remove clients from a wireguard server.
 
-`bash add-client.sh <client_name>` will create a config in clients for that client.
-
-`bash remove-peer.sh <client_pub_key>` will remove the peer.
-
-Download the generated `<client_name>.tar.gz` file and extract it. Follow the instructions in `SETUP.txt` in the resulting folder.
+`bash add-client.sh <client_name>` will create a config in clients for that client with SPLIT-TUNNEL Configuration.
+`bash add-client.sh <client_name> true` will create a config in clients for that client with "TUNNEL-ALL" Configuration.
 
 
 ### This set of scripts was heavily influcenced by:
@@ -34,6 +31,10 @@ NOTE: this assumes some decent commandline knowlege.
 1. edit `/etc/wireguard/wg0.conf` replace `PrivateKey = asdf123=` with the private key created above.
    Change any other settings you need different (ip range, network interfaces[eth0 is outgoing interface in this example])
    stop being root
+   
+1. add postup and postdown scripts to wg0.conf in order to customize firewall (iptables)
+   PostUp=/etc/wireguard/postup.sh
+   PostDown=/etc/wireguard/postdown.sh
 
 1. start wireguard: `sudo wg-quick up wg0` 
 
