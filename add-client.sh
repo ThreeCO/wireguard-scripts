@@ -1,8 +1,9 @@
 #!/bin/bash
 
-srv_host = "172.0.0.1" # external IP of Wireguard
-srv_port = "5280" # external Port of Wireguard
-cl_dns   = "127.0.0.1" # which DNS-Server shall be used?
+srv_host = "172.0.0.1"      # external IP of Wireguard
+srv_port = "5280"           # external Port of Wireguard
+cl_dns   = "127.0.0.1"      # which DNS-Server shall be used?
+cl_ip    = "10.0.0.0"       # subnet of client ips
 
 
 if [ $# -eq 0 ]
