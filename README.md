@@ -3,6 +3,7 @@
 add and remove clients from a wireguard server.
 
 `bash add-client.sh <client_name>` will create a config in clients for that client with SPLIT-TUNNEL Configuration.
+
 `bash add-client.sh <client_name> true` will create a config in clients for that client with "TUNNEL-ALL" Configuration.
 
 
