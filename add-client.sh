@@ -1,5 +1,6 @@
 #!/bin/bash
 
+wg_name  = "wg0"
 srv_host = "172.0.0.1"         # external IP of Wireguard
 srv_port = "5280"              # external Port of Wireguard
 cl_dns   = "127.0.0.1"         # which DNS-Server shall be used?
@@ -36,11 +37,20 @@ else
 	#cp SETUP.txt clients/$1/SETUP.txt
 	#tar czvf clients/$1.tar.gz clients/$1
 	echo "Created config!"
-	echo "Adding peer"
-	#sudo wg set wg0 peer $(cat clients/$1/$1.pub) allowed-ips $ip/32
+	
+	echo "Adding peer to wg-conf"
+	# append peer to wg0.conf
 	cat clients/wg0-server.example.conf | # to befinished  >> wg0.conf
+	
 	echo "Adding peer to hosts file"
 	echo $ip" "$1 | sudo tee -a /etc/hosts
-	sudo wg show
+	
+	# restart wg0
+	sudo wg-quick down $wg_name
+	sudo wg-quick up $wg_name
+	
+	sudo wg show $wg_name
+	
+	# generate qr-code for peer / client
 	qrencode -t ansiutf8 < clients/$1/wg0.conf
 fi
