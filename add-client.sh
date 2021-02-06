@@ -1,9 +1,10 @@
 #!/bin/bash
 
-srv_host = "172.0.0.1"      # external IP of Wireguard
-srv_port = "5280"           # external Port of Wireguard
-cl_dns   = "127.0.0.1"      # which DNS-Server shall be used?
-cl_ip    = "10.0.0.0"       # subnet of client ips
+srv_host = "172.0.0.1"         # external IP of Wireguard
+srv_port = "5280"              # external Port of Wireguard
+cl_dns   = "127.0.0.1"         # which DNS-Server shall be used?
+cl_ip    = "10.0.0.0"          # subnet of client ips
+cl_allowed = "192.10.10.0/32"  # IP for SPLIT-Tunnel / RoadWarrior
 
 
 if [ $# -eq 0 ]
@@ -23,7 +24,7 @@ else
 	FQDN    = $(hostname -f)
         srv_pub = $(cat /etc/wireguard/server_public_key)
 	
-        cat clients/wg0-client.example.conf | sed -e 's/:CLIENT_IP:/'"$ip"'/' | sed -e 's|:CLIENT_KEY:|'"$key"'|' | sed -e 's|:SERVER_PUB_KEY:|'"$SERVER_PUB_KEY"'|' | sed -e 's|:SERVER_ADDRESS:|'"$FQDN"'|' > clients/$1/wg0.conf
+        cat clients/wg0-client.example.conf | sed -e 's/:CLIENT_IP:/'"$cl_ip"'/' | sed -e 's|:CLIENT_KEY:|'"$cl_priv"'|' | sed -e 's|:SERVER_PUB_KEY:|'"$srv_pub"'|' | sed -e 's|:PRESHARED_KEY:|'"$pub_pre"'|' | sed -e 's|:ALLOWED_IPS:|'"$cl_allowed"'|' | sed -e 's|:SERVER_ADDRESS:|'"$srv_host"'|' | sed -e 's|:SERVER_PORT:|'"$srv_port"'|' > clients/$1/wg0.conf
 	echo $ip > clients/last-ip.txt
 	#cp SETUP.txt clients/$1/SETUP.txt
 	#tar czvf clients/$1.tar.gz clients/$1
