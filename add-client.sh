@@ -10,6 +10,7 @@ cl_allowed = "192.10.10.0/32"  # IP for SPLIT-Tunnel / RoadWarrior
 if [ $# -eq 0 ]
 then
 	echo "must pass a client name as an arg: add-client.sh new-client"
+	echo "optionally you can add 'true' as second parameter for site to site - tunnel; standard is roadwarrior"
 else
 	echo "Creating client config for: $1"
 	mkdir -p clients/$1
@@ -21,8 +22,14 @@ else
 	cl_pub  = $(cat clients/$1/$1.pub)
 	cl_pre  = $(cat clients/$1/$1.pre)
 	cl_ip   = "10.0.0."$(expr $(cat clients/last-ip.txt | tr "." " " | awk '{print $4}') + 1)
+	cl_sts  = "0.0.0.0/0"
 	FQDN    = $(hostname -f)
         srv_pub = $(cat /etc/wireguard/server_public_key)
+	
+	if [ $2 -eq "true"]
+        then
+	  cl_allowed = $cl_sts
+	fi
 	
         cat clients/wg0-client.example.conf | sed -e 's/:CLIENT_IP:/'"$cl_ip"'/' | sed -e 's|:CLIENT_KEY:|'"$cl_priv"'|' | sed -e 's|:SERVER_PUB_KEY:|'"$srv_pub"'|' | sed -e 's|:PRESHARED_KEY:|'"$pub_pre"'|' | sed -e 's|:ALLOWED_IPS:|'"$cl_allowed"'|' | sed -e 's|:SERVER_ADDRESS:|'"$srv_host"'|' | sed -e 's|:SERVER_PORT:|'"$srv_port"'|' > clients/$1/wg0.conf
 	echo $ip > clients/last-ip.txt
