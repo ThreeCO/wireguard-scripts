@@ -19,6 +19,6 @@ cat wg0.conf | sudo tee /etc/wireguard/wg0.conf
 # start wireguard wg0
 sudo wg-quick up wg0
 
-# (optional) set wireguard wg0 to start on boot
+# set wireguard wg0 to start on boot
 sudo systemctl enable wg-quick@wg0.service
 
