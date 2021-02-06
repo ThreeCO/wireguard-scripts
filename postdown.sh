@@ -1,6 +1,7 @@
-WIREGUARD_INTERFACE=wg0
-WIREGUARD_LAN=10.0.0.0/24
-MASQUERADE_INTERFACE=eth0
+WIREGUARD_INTERFACE="wg0"
+WIREGUARD_LAN="10.0.0.0/24"
+WIREGUARD_PORT=5280
+MASQUERADE_INTERFACE="eth0"
 
 sudo iptables -t nat -D POSTROUTING -o $MASQUERADE_INTERFACE -j MASQUERADE -s 10.0.0.0/24
 
@@ -13,4 +14,4 @@ sudo iptables -F $CHAIN_NAME
 sudo iptables -X $CHAIN_NAME
 
 # Remove WG-Port
-sudo iptables -D UDP -p udp --dport 5280 -j ACCEPT
+sudo iptables -D UDP -p udp --dport $WIREGUARD_PORT -j ACCEPT
